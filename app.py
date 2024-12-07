@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # MySQL Configuration (read from environment variables in OpenShift)
 db_config = {
-    'host': os.getenv('DB_HOST', '10.0.198.152'),
+    'host': os.getenv('DB_HOST', '10.128.17.51'),
     'user': os.getenv('DB_USER', 'userNPO'),
     'password': os.getenv('DB_PASSWORD', 'vT0ncTXacIq0EUfg'),
     'database': os.getenv('DB_NAME', 'sampledb')
