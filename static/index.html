@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication Details Form</title>
+    <title>Communication Details Dashboard</title>
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <h1>Submit Communication Details</h1>
     <form id="communication-form">
-        <!-- Required Fields -->
         <label for="MessageID">Message ID:</label>
         <input type="text" id="MessageID" name="MessageID" required><br><br>
 
         <label for="SenderDetails">Sender Details:</label>
-        <input type="text" id="SenderDetails" name="SenderDetails" required><br><br>
+        <input type="text" id="SenderDetails" name="SenderDetails"><br><br>
 
         <label for="RecipientDetails">Recipient Details:</label>
-        <input type="text" id="RecipientDetails" name="RecipientDetails" required><br><br>
+        <input type="text" id="RecipientDetails" name="RecipientDetails"><br><br>
 
         <label for="Date">Date:</label>
-        <input type="datetime-local" id="Date" name="Date" required><br><br>
+        <input type="datetime-local" id="Date" name="Date"><br><br>
 
         <label for="Medium">Medium:</label>
-        <input type="text" id="Medium" name="Medium" required><br><br>
+        <input type="text" id="Medium" name="Medium"><br><br>
 
         <label for="SourceLocation">Source Location:</label>
         <input type="text" id="SourceLocation" name="SourceLocation"><br><br>
@@ -45,38 +46,19 @@
         <label for="EventNotes">Event Notes:</label>
         <textarea id="EventNotes" name="EventNotes"></textarea><br><br>
 
-        <label for="VictimEntity">Victim Entity:</label>
-        <input type="text" id="VictimEntity" name="VictimEntity"><br><br>
-
-        <label for="VictimAction">Victim Action:</label>
-        <input type="text" id="VictimAction" name="VictimAction"><br><br>
-
-        <label for="VictimOutcome">Victim Outcome:</label>
-        <input type="text" id="VictimOutcome" name="VictimOutcome"><br><br>
-
-        <label for="OtherEntityName">Other Entity Name:</label>
-        <input type="text" id="OtherEntityName" name="OtherEntityName"><br><br>
-
-        <label for="OtherEntityAction">Other Entity Action:</label>
-        <input type="text" id="OtherEntityAction" name="OtherEntityAction"><br><br>
-
-        <label for="OtherEntityOutcome">Other Entity Outcome:</label>
-        <input type="text" id="OtherEntityOutcome" name="OtherEntityOutcome"><br><br>
-
-        <label for="SpecificLocation">Specific Location:</label>
-        <input type="text" id="SpecificLocation" name="SpecificLocation"><br><br>
-
-        <label for="LocationContext">Location Context:</label>
-        <textarea id="LocationContext" name="LocationContext"></textarea><br><br>
-
         <button type="submit">Submit</button>
     </form>
 
     <h2>Analytics</h2>
-    <div id="analytics">
-        <p>Total Messages: <span id="total-messages">0</span></p>
-        <p>Average Number of Adults: <span id="avg-adults">0</span></p>
-    </div>
+
+    <h3>Event Type Distribution</h3>
+    <div id="eventTypeChart"></div>
+
+    <h3>Communication Trends Over Time</h3>
+    <div id="trendChart"></div>
+
+    <h3>Medium Usage</h3>
+    <div id="mediumChart"></div>
 
     <script>
         document.getElementById('communication-form').addEventListener('submit', async (e) => {
@@ -105,18 +87,59 @@
         });
 
         async function fetchAnalytics() {
-            try {
-                const response = await fetch('/analytics');
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById('total-messages').textContent = data.total_messages;
-                    document.getElementById('avg-adults').textContent = data.avg_adults;
-                } else {
-                    console.error('Failed to fetch analytics.');
-                }
-            } catch (err) {
-                console.error(err);
-            }
+            // Event Type Chart
+            const eventTypeResponse = await fetch('/analytics/event_type');
+            const eventTypeData = await eventTypeResponse.json();
+
+            const eventLabels = eventTypeData.map(item => item.EventType);
+            const eventCounts = eventTypeData.map(item => item.count);
+
+            Plotly.newPlot('eventTypeChart', [{
+                labels: eventLabels,
+                values: eventCounts,
+                type: 'pie',
+                textinfo: 'label+percent',
+                insidetextorientation: 'radial'
+            }], {
+                title: 'Event Type Distribution'
+            });
+
+            // Trend Chart
+            const trendResponse = await fetch('/analytics/trend');
+            const trendData = await trendResponse.json();
+
+            const trendLabels = trendData.map(item => item.communication_date);
+            const trendCounts = trendData.map(item => item.count);
+
+            Plotly.newPlot('trendChart', [{
+                x: trendLabels,
+                y: trendCounts,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: 'blue' }
+            }], {
+                title: 'Communication Trends Over Time',
+                xaxis: { title: 'Date' },
+                yaxis: { title: 'Number of Communications' }
+            });
+
+            // Medium Usage Chart
+            const mediumResponse = await fetch('/analytics/medium');
+            const mediumData = await mediumResponse.json();
+
+            const mediumLabels = mediumData.map(item => item.Medium);
+            const mediumCounts = mediumData.map(item => item.count);
+
+            Plotly.newPlot('mediumChart', [{
+                x: mediumLabels,
+                y: mediumCounts,
+                type: 'bar',
+                marker: { color: 'orange' }
+            }], {
+                title: 'Medium Usage',
+                xaxis: { title: 'Medium' },
+                yaxis: { title: 'Count' }
+            });
         }
 
         // Fetch analytics on page load
