@@ -17,12 +17,10 @@ connection = pymysql.connect(**db_config)
 # Serve Static Frontend Files
 @app.route('/')
 def serve_frontend():
-    """Serve the main HTML file."""
     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/<path:path>')
 def serve_static_files(path):
-    """Serve other static files like CSS, JS."""
     return send_from_directory(app.static_folder, path)
 
 # API Endpoint: Submit Data
@@ -49,17 +47,36 @@ def submit_data():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Analytics
-@app.route('/analytics', methods=['GET'])
-def get_analytics():
+# API Endpoint: Event Type Analysis
+@app.route('/analytics/event_type', methods=['GET'])
+def get_event_type_analysis():
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT COUNT(*) AS total_messages, AVG(NumberOfAdults) AS avg_adults FROM CommunicationDetails")
-            result = cursor.fetchone()
-        return jsonify({
-            "total_messages": result[0],
-            "avg_adults": result[1]
-        }), 200
+            cursor.execute("SELECT EventType, COUNT(*) as count FROM CommunicationDetails GROUP BY EventType")
+            result = cursor.fetchall()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# API Endpoint: Communication Trends Over Time
+@app.route('/analytics/trend', methods=['GET'])
+def get_communication_trend():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT DATE(Date) as communication_date, COUNT(*) as count FROM CommunicationDetails GROUP BY DATE(Date)")
+            result = cursor.fetchall()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# API Endpoint: Medium Usage Analysis
+@app.route('/analytics/medium', methods=['GET'])
+def get_medium_analysis():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT Medium, COUNT(*) as count FROM CommunicationDetails GROUP BY Medium")
+            result = cursor.fetchall()
+        return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
