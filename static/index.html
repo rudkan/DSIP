@@ -115,10 +115,10 @@
             // Event Type Chart
             const eventTypeResponse = await fetch('/analytics/event_type');
             const eventTypeData = await eventTypeResponse.json();
-
-            const eventLabels = eventTypeData.map(item => item.EventType);
-            const eventCounts = eventTypeData.map(item => item.count);
-
+        
+            const eventLabels = eventTypeData.map(item => item[0]); // Extract categories
+            const eventCounts = eventTypeData.map(item => item[1]); // Extract counts
+        
             Plotly.newPlot('eventTypeChart', [{
                 labels: eventLabels,
                 values: eventCounts,
@@ -128,14 +128,15 @@
             }], {
                 title: 'Event Type Distribution'
             });
-
+        
             // Trend Chart
             const trendResponse = await fetch('/analytics/trend');
             const trendData = await trendResponse.json();
-
-            const trendLabels = trendData.map(item => item.communication_date);
-            const trendCounts = trendData.map(item => item.count);
-
+        
+            // Extract and format dates and counts
+            const trendLabels = trendData.map(item => new Date(item[0]).toISOString().split('T')[0]); // Format to YYYY-MM-DD
+            const trendCounts = trendData.map(item => item[1]);
+        
             Plotly.newPlot('trendChart', [{
                 x: trendLabels,
                 y: trendCounts,
@@ -147,14 +148,14 @@
                 xaxis: { title: 'Date' },
                 yaxis: { title: 'Number of Communications' }
             });
-
+        
             // Medium Usage Chart
             const mediumResponse = await fetch('/analytics/medium');
             const mediumData = await mediumResponse.json();
-
-            const mediumLabels = mediumData.map(item => item.Medium);
-            const mediumCounts = mediumData.map(item => item.count);
-
+        
+            const mediumLabels = mediumData.map(item => item[0]); // Extract Medium names
+            const mediumCounts = mediumData.map(item => item[1]); // Extract counts
+        
             Plotly.newPlot('mediumChart', [{
                 x: mediumLabels,
                 y: mediumCounts,
@@ -166,7 +167,7 @@
                 yaxis: { title: 'Count' }
             });
         }
-
+        
         // Fetch analytics on page load
         fetchAnalytics();
     </script>
