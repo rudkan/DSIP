@@ -1,10 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import pymysql
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
-# MySQL Configuration (read from environment variables in OpenShift)
+# MySQL Configuration (Read from environment variables in OpenShift)
 db_config = {
     'host': os.getenv('DB_HOST', '10.128.17.51'),
     'user': os.getenv('DB_USER', 'userNPO'),
@@ -14,6 +14,18 @@ db_config = {
 
 connection = pymysql.connect(**db_config)
 
+# Serve Static Frontend Files
+@app.route('/')
+def serve_frontend():
+    """Serve the main HTML file."""
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/<path:path>')
+def serve_static_files(path):
+    """Serve other static files like CSS, JS."""
+    return send_from_directory(app.static_folder, path)
+
+# API Endpoint: Submit Data
 @app.route('/submit', methods=['POST'])
 def submit_data():
     data = request.json
@@ -37,6 +49,7 @@ def submit_data():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# API Endpoint: Analytics
 @app.route('/analytics', methods=['GET'])
 def get_analytics():
     try:
@@ -50,5 +63,6 @@ def get_analytics():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Start the Flask App
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
