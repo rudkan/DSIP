@@ -1,25 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Communication Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Details Form</title>
 </head>
 <body>
     <h1>Submit Communication Details</h1>
     <form id="communication-form">
+        <!-- Required Fields -->
         <label for="MessageID">Message ID:</label>
-        <input type="text" id="MessageID" name="MessageID" required><br>
+        <input type="text" id="MessageID" name="MessageID" required><br><br>
+
         <label for="SenderDetails">Sender Details:</label>
-        <input type="text" id="SenderDetails" name="SenderDetails"><br>
+        <input type="text" id="SenderDetails" name="SenderDetails" required><br><br>
+
         <label for="RecipientDetails">Recipient Details:</label>
-        <input type="text" id="RecipientDetails" name="RecipientDetails"><br>
+        <input type="text" id="RecipientDetails" name="RecipientDetails" required><br><br>
+
         <label for="Date">Date:</label>
-        <input type="datetime-local" id="Date" name="Date"><br>
+        <input type="datetime-local" id="Date" name="Date" required><br><br>
+
         <label for="Medium">Medium:</label>
-        <input type="text" id="Medium" name="Medium"><br>
+        <input type="text" id="Medium" name="Medium" required><br><br>
+
+        <label for="SourceLocation">Source Location:</label>
+        <input type="text" id="SourceLocation" name="SourceLocation"><br><br>
+
+        <label for="DestinationLocation">Destination Location:</label>
+        <input type="text" id="DestinationLocation" name="DestinationLocation"><br><br>
+
+        <label for="CommunicationType">Communication Type:</label>
+        <input type="text" id="CommunicationType" name="CommunicationType"><br><br>
+
         <label for="NumberOfAdults">Number of Adults:</label>
-        <input type="number" id="NumberOfAdults" name="NumberOfAdults"><br>
+        <input type="number" id="NumberOfAdults" name="NumberOfAdults"><br><br>
+
         <label for="NumberOfChildren">Number of Children:</label>
-        <input type="number" id="NumberOfChildren" name="NumberOfChildren"><br>
+        <input type="number" id="NumberOfChildren" name="NumberOfChildren"><br><br>
+
+        <label for="EventType">Event Type:</label>
+        <input type="text" id="EventType" name="EventType"><br><br>
+
+        <label for="EventNotes">Event Notes:</label>
+        <textarea id="EventNotes" name="EventNotes"></textarea><br><br>
+
+        <label for="VictimEntity">Victim Entity:</label>
+        <input type="text" id="VictimEntity" name="VictimEntity"><br><br>
+
+        <label for="VictimAction">Victim Action:</label>
+        <input type="text" id="VictimAction" name="VictimAction"><br><br>
+
+        <label for="VictimOutcome">Victim Outcome:</label>
+        <input type="text" id="VictimOutcome" name="VictimOutcome"><br><br>
+
+        <label for="OtherEntityName">Other Entity Name:</label>
+        <input type="text" id="OtherEntityName" name="OtherEntityName"><br><br>
+
+        <label for="OtherEntityAction">Other Entity Action:</label>
+        <input type="text" id="OtherEntityAction" name="OtherEntityAction"><br><br>
+
+        <label for="OtherEntityOutcome">Other Entity Outcome:</label>
+        <input type="text" id="OtherEntityOutcome" name="OtherEntityOutcome"><br><br>
+
+        <label for="SpecificLocation">Specific Location:</label>
+        <input type="text" id="SpecificLocation" name="SpecificLocation"><br><br>
+
+        <label for="LocationContext">Location Context:</label>
+        <textarea id="LocationContext" name="LocationContext"></textarea><br><br>
+
         <button type="submit">Submit</button>
     </form>
 
@@ -35,26 +84,38 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
 
-            const response = await fetch('/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
 
-            if (response.ok) {
-                alert('Data submitted successfully!');
-                fetchAnalytics();
-            } else {
-                alert('Error submitting data!');
+                if (response.ok) {
+                    alert('Data submitted successfully!');
+                    fetchAnalytics();
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.error);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Failed to submit data.');
             }
         });
 
         async function fetchAnalytics() {
-            const response = await fetch('/analytics');
-            if (response.ok) {
-                const data = await response.json();
-                document.getElementById('total-messages').textContent = data.total_messages;
-                document.getElementById('avg-adults').textContent = data.avg_adults;
+            try {
+                const response = await fetch('/analytics');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('total-messages').textContent = data.total_messages;
+                    document.getElementById('avg-adults').textContent = data.avg_adults;
+                } else {
+                    console.error('Failed to fetch analytics.');
+                }
+            } catch (err) {
+                console.error(err);
             }
         }
 
