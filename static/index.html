@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Communication Details Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <h1>Submit Communication Details</h1>
@@ -76,13 +77,13 @@
     <h2>Analytics</h2>
 
     <h3>Event Type Distribution</h3>
-    <canvas id="eventTypeChart" width="400" height="200"></canvas>
+    <div id="eventTypeChart"></div>
 
     <h3>Communication Trends Over Time</h3>
-    <canvas id="trendChart" width="400" height="200"></canvas>
+    <div id="trendChart"></div>
 
     <h3>Medium Usage</h3>
-    <canvas id="mediumChart" width="400" height="200"></canvas>
+    <div id="mediumChart"></div>
 
     <script>
         document.getElementById('communication-form').addEventListener('submit', async (e) => {
@@ -118,16 +119,14 @@
             const eventLabels = eventTypeData.map(item => item.EventType);
             const eventCounts = eventTypeData.map(item => item.count);
 
-            const eventCtx = document.getElementById('eventTypeChart').getContext('2d');
-            new Chart(eventCtx, {
+            Plotly.newPlot('eventTypeChart', [{
+                labels: eventLabels,
+                values: eventCounts,
                 type: 'pie',
-                data: {
-                    labels: eventLabels,
-                    datasets: [{
-                        data: eventCounts,
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                    }]
-                }
+                textinfo: 'label+percent',
+                insidetextorientation: 'radial'
+            }], {
+                title: 'Event Type Distribution'
             });
 
             // Trend Chart
@@ -137,18 +136,16 @@
             const trendLabels = trendData.map(item => item.communication_date);
             const trendCounts = trendData.map(item => item.count);
 
-            const trendCtx = document.getElementById('trendChart').getContext('2d');
-            new Chart(trendCtx, {
-                type: 'line',
-                data: {
-                    labels: trendLabels,
-                    datasets: [{
-                        label: 'Number of Communications',
-                        data: trendCounts,
-                        borderColor: '#36A2EB',
-                        fill: false
-                    }]
-                }
+            Plotly.newPlot('trendChart', [{
+                x: trendLabels,
+                y: trendCounts,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: 'blue' }
+            }], {
+                title: 'Communication Trends Over Time',
+                xaxis: { title: 'Date' },
+                yaxis: { title: 'Number of Communications' }
             });
 
             // Medium Usage Chart
@@ -158,17 +155,15 @@
             const mediumLabels = mediumData.map(item => item.Medium);
             const mediumCounts = mediumData.map(item => item.count);
 
-            const mediumCtx = document.getElementById('mediumChart').getContext('2d');
-            new Chart(mediumCtx, {
+            Plotly.newPlot('mediumChart', [{
+                x: mediumLabels,
+                y: mediumCounts,
                 type: 'bar',
-                data: {
-                    labels: mediumLabels,
-                    datasets: [{
-                        label: 'Medium Usage',
-                        data: mediumCounts,
-                        backgroundColor: '#FFCE56'
-                    }]
-                }
+                marker: { color: 'orange' }
+            }], {
+                title: 'Medium Usage',
+                xaxis: { title: 'Medium' },
+                yaxis: { title: 'Count' }
             });
         }
 
