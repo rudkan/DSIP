@@ -6,7 +6,8 @@ app = Flask(__name__, static_folder='static')
 
 # MySQL Configuration (Read from environment variables in OpenShift)
 db_config = {
-    'host': os.getenv('DB_HOST', '172.30.77.56'),
+    'host': os.getenv('DB_HOST', '172.30.77.56'),  # Use Cluster IP
+    'port': int(os.getenv('DB_PORT', 3306)),
     'user': os.getenv('DB_USER', 'userNPO'),
     'password': os.getenv('DB_PASSWORD', 'vT0ncTXacIq0EUfg'),
     'database': os.getenv('DB_NAME', 'sampledb')
