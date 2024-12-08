@@ -48,31 +48,55 @@ def submit_data():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Event Type Analysis
-@app.route('/analytics/event_type', methods=['GET'])
-def get_event_type_analysis():
+# Additional Analytics Endpoints
+
+# API Endpoint: Total Entry Counter
+@app.route('/analytics/total_entries', methods=['GET'])
+def get_total_entries():
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT EventType, COUNT(*) as count FROM CommunicationDetails GROUP BY EventType")
+            cursor.execute("SELECT COUNT(*) as total FROM CommunicationDetails")
+            result = cursor.fetchone()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# API Endpoint: Adults to Kids Ratio
+@app.route('/analytics/adults_kids_ratio', methods=['GET'])
+def get_adults_kids_ratio():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT SUM(NumberOfAdults) as adults, SUM(NumberOfChildren) as kids FROM CommunicationDetails")
+            result = cursor.fetchone()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# API Endpoint: Recipient Details Count
+@app.route('/analytics/recipient_details', methods=['GET'])
+def get_recipient_details_count():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT RecipientDetails, COUNT(*) as count FROM CommunicationDetails GROUP BY RecipientDetails")
             result = cursor.fetchall()
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Communication Trends Over Time
-@app.route('/analytics/trend', methods=['GET'])
-def get_communication_trend():
+# API Endpoint: Source Location Count
+@app.route('/analytics/source_location', methods=['GET'])
+def get_source_location_count():
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT DATE(Date) as communication_date, COUNT(*) as count FROM CommunicationDetails GROUP BY DATE(Date)")
+            cursor.execute("SELECT SourceLocation, COUNT(*) as count FROM CommunicationDetails GROUP BY SourceLocation")
             result = cursor.fetchall()
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Medium Usage Analysis
-@app.route('/analytics/medium', methods=['GET'])
-def get_medium_analysis():
+# API Endpoint: Medium Usage Ratio
+@app.route('/analytics/medium_ratio', methods=['GET'])
+def get_medium_ratio():
     try:
         with connection.cursor() as cursor:
             cursor.execute("SELECT Medium, COUNT(*) as count FROM CommunicationDetails GROUP BY Medium")
@@ -80,6 +104,17 @@ def get_medium_analysis():
         return jsonify(result), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+# API Endpoint: Victim Entity Count
+@app.route('/analytics/victim_entity', methods=['GET'])
+def get_victim_entity_count():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT VictimEntity, COUNT(*) as count FROM CommunicationDetails GROUP BY VictimEntity")
+            result = cursor.fetchall()
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # API Endpoint: Get Next MessageID
 @app.route('/get_next_message_id', methods=['GET'])
