@@ -33,7 +33,16 @@
             <section id="agenda-section">
                 <h2>Our Agenda</h2>
                 <p>
-                    This website is designed to provide a structured entry system for capturing critical data on human trafficking in Kenya. By using this system, users can contribute to a centralized, organized database that empowers stakeholders to combat human trafficking more effectively.
+                    This website is designed to provide a structured entry system for capturing critical data on human trafficking in Kenya. Previously, the absence of a well-organized system led to data being inconsistent, scattered, and underutilized. Our platform aims to:
+                </p>
+                <ul>
+                    <li><strong>Streamline Data Collection:</strong> Allow users to input comprehensive and well-structured information for effective analysis.</li>
+                    <li><strong>Ensure Data Usability:</strong> Convert previously unusable data into actionable insights to combat human trafficking.</li>
+                    <li><strong>Support Decision-Making:</strong> Provide reliable data for stakeholders to develop informed strategies against trafficking.</li>
+                    <li><strong>Promote Accountability:</strong> Enable transparent data logging to track interventions and outcomes.</li>
+                </ul>
+                <p>
+                    By using this system, users can contribute to a centralized, organized database that empowers stakeholders to combat human trafficking more effectively. Let’s make data work for a safer and more just Kenya.
                 </p>
             </section>
 
@@ -54,10 +63,52 @@
                 <input type="datetime-local" id="Date" name="Date"><br><br>
 
                 <label for="Medium">Medium:</label>
-                <input type="text" id="Medium" name="Medium" placeholder="WhatsApp, Email, SMS, etc"><br><br>
+                <input type="text" id="Medium" name="Medium" placeholder="WhatsApp, Email, SMS, etc"><br><br>
 
-                <!-- Other Fields -->
-                <!-- Add the rest of the fields as in the original -->
+                <label for="SourceLocation">Source Location:</label>
+                <input type="text" id="SourceLocation" name="SourceLocation" placeholder="Enter Source Location of Refugee"><br><br>
+
+                <label for="DestinationLocation">Destination Location:</label>
+                <input type="text" id="DestinationLocation" name="DestinationLocation" placeholder="Enter Destination Location of Refugee"><br><br>
+
+                <label for="CommunicationType">Communication Type:</label>
+                <input type="text" id="CommunicationType" name="CommunicationType" placeolder="Enter Communication Type"><br><br>
+
+                <label for="NumberOfAdults">Number of Adults:</label>
+                <input type="number" id="NumberOfAdults" name="NumberOfAdults" placeholder="Enter Number of Adults(18+)"><br><br>
+
+                <label for="NumberOfChildren">Number of Children:</label>
+                <input type="number" id="NumberOfChildren" name="NumberOfChildren" placeholder="Enter Number of Childerns (Below 18)"><br><br>
+
+                <label for="EventType">Event Type:</label>
+                <input type="text" id="EventType" name="EventType" placeholder=" Transportation, Refugee Detention, Missing Persons, etc"><br><br>
+
+                <label for="EventNotes">Event Notes:</label>
+                <textarea id="EventNotes" name="EventNotes" placeholder="Enter Additional Information of Event"></textarea><br><br>
+
+                <label for="VictimEntity">Victim Entity:</label>
+                <input type="text" id="VictimEntity" name="VictimEntity" placeholder"Enter Victim: Refugees, Victim: Eritreans, Victim: Relatives, etc"><br><br>
+
+                <label for="VictimAction">Victim Action:</label>
+                <input type="text" id="VictimAction" name="VictimAction" placeholder="Enter Victim Action Taken ex:Trasported to"><br><br>
+
+                <label for="VictimOutcome">Victim Outcome:</label>
+                <input type="text" id="VictimOutcome" name="VictimOutcome" placeholder="Enter Outcome"><br><br>
+
+                <label for="OtherEntityName">Other Entity Name:</label>
+                <input type="text" id="OtherEntityName" name="OtherEntityName" placeholder="Police or Other Authority"><br><br>
+
+                <label for="OtherEntityAction">Other Entity Action:</label>
+                <input type="text" id="OtherEntityAction" name="OtherEntityAction" placeholder="Atcion Taken by Other Authority"><br><br>
+
+                <label for="OtherEntityOutcome">Other Entity Outcome:</label>
+                <input type="text" id="OtherEntityOutcome" name="OtherEntityOutcome" placeholder="Enter Outcome"><br><br>
+
+                <label for="SpecificLocation">Specific Location:</label>
+                <input type="text" id="SpecificLocation" name="SpecificLocation" placeholder="Enter Current Location"><br><br>
+
+                <label for="LocationContext">Location Context:</label>
+                <textarea id="LocationContext" name="LocationContext" placeholder="Additional Location Information"></textarea><br><br>
 
                 <button type="submit">Submit</button>
             </form>
