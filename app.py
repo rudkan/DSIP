@@ -86,7 +86,7 @@ def get_medium_analysis():
 def get_next_message_id():
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT MessageID FROM CommunicationDetails ORDER BY MessageID DESC LIMIT 1")
+            cursor.execute("SELECT COUNT(*) FROM CommunicationDetails;")
             result = cursor.fetchone()
             # If no entries in the database, start with 1
             if result:
