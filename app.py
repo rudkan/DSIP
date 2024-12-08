@@ -86,15 +86,20 @@ def get_medium_analysis():
 def get_next_message_id():
     try:
         with connection.cursor() as cursor:
+            # Fetch the highest MessageID
             cursor.execute("SELECT COUNT(*) FROM CommunicationDetails;")
-            result = cursor.fetchone()
-            # If no entries in the database, start with 1
+            result = cursor.fetchone()  # Fetch a single row
+            
             if result:
-                last_id = int(result['MessageID'])  # Assuming MessageID is numeric
-                next_id = last_id + 1
+                # Access the first element of the tuple
+                last_message_id = result[0]  
+                # Increment the numeric part of the MessageID
+                next_message_id = f"{int(last_message_id) + 1}"
             else:
-                next_id = 1
-        return jsonify({"next_message_id": str(next_id)}), 200
+                # Default to "1" if no rows exist
+                next_message_id = "1"
+            
+        return jsonify({"next_message_id": next_message_id}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
