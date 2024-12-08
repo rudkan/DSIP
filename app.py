@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 import pymysql
 import os
 
-app = Flask(_name_, static_folder='static')
+app = Flask(__name__, static_folder='static')
 
 # MySQL Configuration (Read from environment variables in OpenShift)
 db_config = {
