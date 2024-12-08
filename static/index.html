@@ -115,7 +115,7 @@
 
             <!-- Analytics Section -->
             <h2 id="analytics">Analytics</h2>
-            <h3>Total Entries</h3>
+            <h3>Total Entries:</h3>
             <p id="totalEntries">Loading...</p>
             <h3>Adults to Kids Ratio</h3>
             <canvas id="adultsKidsChart" width="400" height="200"></canvas>
@@ -152,7 +152,7 @@
                 // Total Entries
                 const totalEntriesRes = await fetch('/analytics/total_entries');
                 const totalEntriesData = await totalEntriesRes.json();
-                document.getElementById('totalEntries').textContent = `Total Entries: ${totalEntriesData.total || 0}`;
+                document.getElementById('totalEntries').textContent = `${totalEntriesData.total || 0}`;
 
                 // Adults to Kids Ratio
                 const adultsKidsRes = await fetch('/analytics/adults_kids_ratio');
