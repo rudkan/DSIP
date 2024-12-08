@@ -122,5 +122,63 @@ def get_next_message_id():
         if 'connection' in locals():
             connection.close()
 
+# API Endpoint: Source Location Count
+@app.route('/analytics/source_location', methods=['GET'])
+def get_source_location_count():
+    try:
+        # Establish a new connection for each request
+        connection = get_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT SourceLocation, COUNT(*) as count FROM CommunicationDetails GROUP BY SourceLocation")
+            result = cursor.fetchall()
+
+            # Format the result as a list of dictionaries
+            response = [{"SourceLocation": row[0], "count": row[1]} for row in result]
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        # Ensure the connection is closed
+        if 'connection' in locals():
+            connection.close()
+
+
+# API Endpoint: Medium Usage Ratio
+@app.route('/analytics/medium_ratio', methods=['GET'])
+def get_medium_ratio():
+    try:
+        connection = get_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT Medium, COUNT(*) as count FROM CommunicationDetails GROUP BY Medium")
+            result = cursor.fetchall()
+
+            # Format the result as a list of dictionaries
+            response = [{"Medium": row[0], "count": row[1]} for row in result]
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if 'connection' in locals():
+            connection.close()
+
+
+# API Endpoint: Victim Entity Count
+@app.route('/analytics/victim_entity', methods=['GET'])
+def get_victim_entity_count():
+    try:
+        connection = get_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT VictimEntity, COUNT(*) as count FROM CommunicationDetails GROUP BY VictimEntity")
+            result = cursor.fetchall()
+
+            # Format the result as a list of dictionaries
+            response = [{"VictimEntity": row[0], "count": row[1]} for row in result]
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if 'connection' in locals():
+            connection.close()
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
