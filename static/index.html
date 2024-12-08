@@ -3,87 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication Details Dashboard</title>
-    <!-- Include Plotly.js -->
+    <link rel="stylesheet" href="styles.css">
+    <title>Human Trafficking in Kenya Information Entry Portal</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <h1>Submit Communication Details</h1>
-    <form id="communication-form">
-        <!-- Required Fields -->
-        <label for="MessageID">Message ID:</label>
-        <input type="text" id="MessageID" name="MessageID" required><br><br>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Kenya Portal</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#data-entry" class="active">Data Entry</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-        <label for="SenderDetails">Sender Details:</label>
-        <input type="text" id="SenderDetails" name="SenderDetails" required><br><br>
+        <!-- Main Content -->
+        <main>
+            <h1>Human Trafficking in Kenya Information Entry Portal</h1>
 
-        <label for="RecipientDetails">Recipient Details:</label>
-        <input type="text" id="RecipientDetails" name="RecipientDetails" required><br><br>
+            <!-- Agenda Section -->
+            <section id="agenda-section">
+                <h2>Our Agenda</h2>
+                <p>
+                    This website is designed to provide a structured entry system for capturing critical data on human trafficking in Kenya. Previously, the absence of a well-organized system led to data being inconsistent, scattered, and underutilized. Our platform aims to:
+                </p>
+                <ul>
+                    <li><strong>Streamline Data Collection:</strong> Allow users to input comprehensive and well-structured information for effective analysis.</li>
+                    <li><strong>Ensure Data Usability:</strong> Convert previously unusable data into actionable insights to combat human trafficking.</li>
+                    <li><strong>Support Decision-Making:</strong> Provide reliable data for stakeholders to develop informed strategies against trafficking.</li>
+                    <li><strong>Promote Accountability:</strong> Enable transparent data logging to track interventions and outcomes.</li>
+                </ul>
+                <p>
+                    By using this system, users can contribute to a centralized, organized database that empowers stakeholders to combat human trafficking more effectively. Let’s make data work for a safer and more just Kenya.
+                </p>
+            </section>
 
-        <label for="Date">Date:</label>
-        <input type="datetime-local" id="Date" name="Date" required><br><br>
+            <!-- Data Entry Form -->
+            <h2 id="data-entry">Submit Human Trafficking Information</h2>
+            <form id="communication-form">
+                <!-- Required Fields -->
+                <label for="MessageID">Message ID:</label>
+                <input type="text" id="MessageID" name="MessageID" required><br><br>
 
-        <label for="Medium">Medium:</label>
-        <input type="text" id="Medium" name="Medium" required><br><br>
+                <label for="SenderDetails">Sender Details:</label>
+                <input type="text" id="SenderDetails" name="SenderDetails" required><br><br>
 
-        <label for="SourceLocation">Source Location:</label>
-        <input type="text" id="SourceLocation" name="SourceLocation"><br><br>
+                <label for="RecipientDetails">Recipient Details:</label>
+                <input type="text" id="RecipientDetails" name="RecipientDetails" required><br><br>
 
-        <label for="DestinationLocation">Destination Location:</label>
-        <input type="text" id="DestinationLocation" name="DestinationLocation"><br><br>
+                <label for="Date">Date:</label>
+                <input type="datetime-local" id="Date" name="Date" required><br><br>
 
-        <label for="CommunicationType">Communication Type:</label>
-        <input type="text" id="CommunicationType" name="CommunicationType"><br><br>
+                <label for="Medium">Medium:</label>
+                <input type="text" id="Medium" name="Medium" required><br><br>
 
-        <label for="NumberOfAdults">Number of Adults:</label>
-        <input type="number" id="NumberOfAdults" name="NumberOfAdults"><br><br>
+                <label for="SourceLocation">Source Location:</label>
+                <input type="text" id="SourceLocation" name="SourceLocation"><br><br>
 
-        <label for="NumberOfChildren">Number of Children:</label>
-        <input type="number" id="NumberOfChildren" name="NumberOfChildren"><br><br>
+                <label for="DestinationLocation">Destination Location:</label>
+                <input type="text" id="DestinationLocation" name="DestinationLocation"><br><br>
 
-        <label for="EventType">Event Type:</label>
-        <input type="text" id="EventType" name="EventType"><br><br>
+                <label for="CommunicationType">Communication Type:</label>
+                <input type="text" id="CommunicationType" name="CommunicationType"><br><br>
 
-        <label for="EventNotes">Event Notes:</label>
-        <textarea id="EventNotes" name="EventNotes"></textarea><br><br>
+                <label for="NumberOfAdults">Number of Adults:</label>
+                <input type="number" id="NumberOfAdults" name="NumberOfAdults"><br><br>
 
-        <label for="VictimEntity">Victim Entity:</label>
-        <input type="text" id="VictimEntity" name="VictimEntity"><br><br>
+                <label for="NumberOfChildren">Number of Children:</label>
+                <input type="number" id="NumberOfChildren" name="NumberOfChildren"><br><br>
 
-        <label for="VictimAction">Victim Action:</label>
-        <input type="text" id="VictimAction" name="VictimAction"><br><br>
+                <label for="EventType">Event Type:</label>
+                <input type="text" id="EventType" name="EventType"><br><br>
 
-        <label for="VictimOutcome">Victim Outcome:</label>
-        <input type="text" id="VictimOutcome" name="VictimOutcome"><br><br>
+                <label for="EventNotes">Event Notes:</label>
+                <textarea id="EventNotes" name="EventNotes"></textarea><br><br>
 
-        <label for="OtherEntityName">Other Entity Name:</label>
-        <input type="text" id="OtherEntityName" name="OtherEntityName"><br><br>
+                <label for="VictimEntity">Victim Entity:</label>
+                <input type="text" id="VictimEntity" name="VictimEntity"><br><br>
 
-        <label for="OtherEntityAction">Other Entity Action:</label>
-        <input type="text" id="OtherEntityAction" name="OtherEntityAction"><br><br>
+                <label for="VictimAction">Victim Action:</label>
+                <input type="text" id="VictimAction" name="VictimAction"><br><br>
 
-        <label for="OtherEntityOutcome">Other Entity Outcome:</label>
-        <input type="text" id="OtherEntityOutcome" name="OtherEntityOutcome"><br><br>
+                <label for="VictimOutcome">Victim Outcome:</label>
+                <input type="text" id="VictimOutcome" name="VictimOutcome"><br><br>
 
-        <label for="SpecificLocation">Specific Location:</label>
-        <input type="text" id="SpecificLocation" name="SpecificLocation"><br><br>
+                <label for="OtherEntityName">Other Entity Name:</label>
+                <input type="text" id="OtherEntityName" name="OtherEntityName"><br><br>
 
-        <label for="LocationContext">Location Context:</label>
-        <textarea id="LocationContext" name="LocationContext"></textarea><br><br>
+                <label for="OtherEntityAction">Other Entity Action:</label>
+                <input type="text" id="OtherEntityAction" name="OtherEntityAction"><br><br>
 
-        <button type="submit">Submit</button>
-    </form>
+                <label for="OtherEntityOutcome">Other Entity Outcome:</label>
+                <input type="text" id="OtherEntityOutcome" name="OtherEntityOutcome"><br><br>
 
-    <h2>Analytics</h2>
+                <label for="SpecificLocation">Specific Location:</label>
+                <input type="text" id="SpecificLocation" name="SpecificLocation"><br><br>
 
-    <h3>Event Type Distribution</h3>
-    <div id="eventTypeChart"></div>
+                <label for="LocationContext">Location Context:</label>
+                <textarea id="LocationContext" name="LocationContext"></textarea><br><br>
 
-    <h3>Communication Trends Over Time</h3>
-    <div id="trendChart"></div>
+                <button type="submit">Submit</button>
+            </form>
 
-    <h3>Medium Usage</h3>
-    <div id="mediumChart"></div>
+    <!-- Analytics Section -->
+            <h2 id="analytics">Analytics</h2>
+            <h3>Event Type Distribution</h3>
+            <canvas id="eventTypeChart" width="400" height="200"></canvas>
+
+            <h3>Communication Trends Over Time</h3>
+            <canvas id="trendChart" width="400" height="200"></canvas>
+
+            <h3>Medium Usage</h3>
+            <canvas id="mediumChart" width="400" height="200"></canvas>
+        </main>
+    </div>
 
     <script>
         document.getElementById('communication-form').addEventListener('submit', async (e) => {
