@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 import pymysql
 import os
 
-app = Flask(__name__, static_folder='static')
+app = Flask(_name_, static_folder='static')
 
 # MySQL Configuration (Read from environment variables in OpenShift)
 db_config = {
@@ -106,6 +106,7 @@ def get_medium_ratio():
         return jsonify({"error": str(e)}), 500
 
 # API Endpoint: Victim Entity Count
+# API Endpoint: Victim Entity Count
 @app.route('/analytics/victim_entity', methods=['GET'])
 def get_victim_entity_count():
     try:
@@ -114,7 +115,7 @@ def get_victim_entity_count():
             result = cursor.fetchall()
         return jsonify(result), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 500  # Ensure there are no non-breaking spaces here
 
 # API Endpoint: Get Next MessageID
 @app.route('/get_next_message_id', methods=['GET'])
@@ -139,5 +140,5 @@ def get_next_message_id():
         return jsonify({"error": str(e)}), 500
 
 # Start the Flask App
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+if _name_ == '_main_':
+    app.run(host='0.0.0.0', port=8080)
