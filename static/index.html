@@ -168,65 +168,84 @@
             }
         });
 
-        async function fetchAnalytics() {
-            // Event Type Chart
-            const eventTypeResponse = await fetch('/analytics/event_type');
-            const eventTypeData = await eventTypeResponse.json();
-        
-            const eventLabels = eventTypeData.map(item => item[0]); // Extract categories
-            const eventCounts = eventTypeData.map(item => item[1]); // Extract counts
-        
-            Plotly.newPlot('eventTypeChart', [{
-                labels: eventLabels,
-                values: eventCounts,
-                type: 'pie',
-                textinfo: 'label+percent',
-                insidetextorientation: 'radial'
-            }], {
-                title: 'Event Type Distribution'
-            });
-        
-            // Trend Chart
-            const trendResponse = await fetch('/analytics/trend');
-            const trendData = await trendResponse.json();
-        
-            // Extract and format dates and counts
-            const trendLabels = trendData.map(item => new Date(item[0]).toISOString().split('T')[0]); // Format to YYYY-MM-DD
-            const trendCounts = trendData.map(item => item[1]);
-        
-            Plotly.newPlot('trendChart', [{
-                x: trendLabels,
-                y: trendCounts,
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: { color: 'blue' }
-            }], {
-                title: 'Communication Trends Over Time',
-                xaxis: { title: 'Date' },
-                yaxis: { title: 'Number of Communications' }
-            });
-        
-            // Medium Usage Chart
-            const mediumResponse = await fetch('/analytics/medium');
-            const mediumData = await mediumResponse.json();
-        
-            const mediumLabels = mediumData.map(item => item[0]); // Extract Medium names
-            const mediumCounts = mediumData.map(item => item[1]); // Extract counts
-        
-            Plotly.newPlot('mediumChart', [{
-                x: mediumLabels,
-                y: mediumCounts,
-                type: 'bar',
-                marker: { color: 'orange' }
-            }], {
-                title: 'Medium Usage',
-                xaxis: { title: 'Medium' },
-                yaxis: { title: 'Count' }
-            });
-        }
-        
-        // Fetch analytics on page load
-        fetchAnalytics();
+        document.addEventListener('DOMContentLoaded', async () => {
+        // Fetch Total Entries
+        const totalEntriesRes = await fetch('/analytics/total_entries');
+        const totalEntriesData = await totalEntriesRes.json();
+        document.getElementById('totalEntries').textContent = Total Entries: ${totalEntriesData.total};
+
+        // Fetch and Display Adults to Kids Ratio
+        const adultsKidsRes = await fetch('/analytics/adults_kids_ratio');
+        const adultsKidsData = await adultsKidsRes.json();
+        new Chart(document.getElementById('adultsKidsChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Adults', 'Kids'],
+                datasets: [{
+                    data: [adultsKidsData.adults, adultsKidsData.kids],
+                    backgroundColor: ['#8e4dff', '#431da3']
+                }]
+            }
+        });
+
+        // Fetch and Display Recipient Details Count
+        const recipientDetailsRes = await fetch('/analytics/recipient_details');
+        const recipientDetailsData = await recipientDetailsRes.json();
+        new Chart(document.getElementById('recipientDetailsChart'), {
+            type: 'bar',
+            data: {
+                labels: recipientDetailsData.map(d => d.RecipientDetails),
+                datasets: [{
+                    label: 'Recipient Count',
+                    data: recipientDetailsData.map(d => d.count),
+                    backgroundColor: '#8e4dff'
+                }]
+            }
+        });
+
+        // Fetch and Display Source Location Pins
+        const sourceLocationRes = await fetch('/analytics/source_location');
+        const sourceLocationData = await sourceLocationRes.json();
+        const map = L.map('sourceLocationMap').setView([0.0236, 37.9062], 6); // Centered on Kenya
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        sourceLocationData.forEach(location => {
+            if (location.SourceLocation) {
+                // Add your coordinates lookup logic here
+                L.marker([/* Add coordinates for location */]).addTo(map)
+                    .bindPopup(${location.SourceLocation}: ${location.count} entries);
+            }
+        });
+
+        // Fetch and Display Medium Usage Ratio
+        const mediumRes = await fetch('/analytics/medium_ratio');
+        const mediumData = await mediumRes.json();
+        new Chart(document.getElementById('mediumChart'), {
+            type: 'pie',
+            data: {
+                labels: mediumData.map(d => d.Medium),
+                datasets: [{
+                    data: mediumData.map(d => d.count),
+                    backgroundColor: ['#8e4dff', '#431da3', '#ff8e00', '#00d7a3']
+                }]
+            }
+        });
+
+        // Fetch and Display Victim Entity Count
+        const victimEntityRes = await fetch('/analytics/victim_entity');
+        const victimEntityData = await victimEntityRes.json();
+        new Chart(document.getElementById('victimEntityChart'), {
+            type: 'bar',
+            data: {
+                labels: victimEntityData.map(d => d.VictimEntity),
+                datasets: [{
+                    label: 'Victim Entity Count',
+                    data: victimEntityData.map(d => d.count),
+                    backgroundColor: '#431da3'
+                }]
+            }
+        });
+    });
+
     </script>
 </body>
 </html>
