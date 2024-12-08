@@ -50,7 +50,6 @@ def submit_data():
 
 # Additional Analytics Endpoints
 
-# API Endpoint: Total Entry Counter
 @app.route('/analytics/total_entries', methods=['GET'])
 def get_total_entries():
     try:
@@ -61,7 +60,6 @@ def get_total_entries():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Adults to Kids Ratio
 @app.route('/analytics/adults_kids_ratio', methods=['GET'])
 def get_adults_kids_ratio():
     try:
@@ -72,7 +70,6 @@ def get_adults_kids_ratio():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Recipient Details Count
 @app.route('/analytics/recipient_details', methods=['GET'])
 def get_recipient_details_count():
     try:
@@ -83,7 +80,6 @@ def get_recipient_details_count():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Source Location Count
 @app.route('/analytics/source_location', methods=['GET'])
 def get_source_location_count():
     try:
@@ -94,7 +90,6 @@ def get_source_location_count():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Medium Usage Ratio
 @app.route('/analytics/medium_ratio', methods=['GET'])
 def get_medium_ratio():
     try:
@@ -105,8 +100,6 @@ def get_medium_ratio():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Victim Entity Count
-# API Endpoint: Victim Entity Count
 @app.route('/analytics/victim_entity', methods=['GET'])
 def get_victim_entity_count():
     try:
@@ -115,30 +108,19 @@ def get_victim_entity_count():
             result = cursor.fetchall()
         return jsonify(result), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500  # Ensure there are no non-breaking spaces here
+        return jsonify({"error": str(e)}), 500
 
-# API Endpoint: Get Next MessageID
 @app.route('/get_next_message_id', methods=['GET'])
 def get_next_message_id():
     try:
         with connection.cursor() as cursor:
-            # Fetch the highest MessageID
-            cursor.execute("SELECT COUNT(*) FROM CommunicationDetails;")
-            result = cursor.fetchone()  # Fetch a single row
-            
-            if result:
-                # Access the first element of the tuple
-                last_message_id = result[0]  
-                # Increment the numeric part of the MessageID
-                next_message_id = f"{int(last_message_id) + 1}"
-            else:
-                # Default to "1" if no rows exist
-                next_message_id = "1"
-            
+            cursor.execute("SELECT COUNT(*) FROM CommunicationDetails")
+            result = cursor.fetchone()
+            last_message_id = result[0] if result else 0
+            next_message_id = str(last_message_id + 1)
         return jsonify({"next_message_id": next_message_id}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Start the Flask App
 if _name_ == '_main_':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080)
