@@ -124,6 +124,25 @@
     </div>
 
     <script>
+
+        // Fetch next MessageID on page load
+        async function fetchNextMessageID() {
+            try {
+                const response = await fetch('/get_next_message_id');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('MessageID').value = data.next_message_id;
+                } else {
+                    console.error('Failed to fetch next MessageID:', response.statusText);
+                }
+            } catch (err) {
+                console.error('Error fetching next MessageID:', err);
+            }
+        }
+
+        // Call fetchNextMessageID when the page loads
+        document.addEventListener('DOMContentLoaded', fetchNextMessageID);
+        
         document.getElementById('communication-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
