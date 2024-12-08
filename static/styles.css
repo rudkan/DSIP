@@ -228,3 +228,8 @@ canvas {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
 }
+
+#sourceLocationMap {
+    height: 400px;
+    margin-bottom: 20px;
+}
