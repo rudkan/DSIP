@@ -1,0 +1,230 @@
+/* General Styles */
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f9;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 15%;
+    background: linear-gradient(to bottom, #8e4dff, #431da3);
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar .logo h1,
+.sidebar .logo h2 {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+/* .sidebar nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05); */
+/* } */
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+
+/* Main Content */
+main {
+    width: 85%;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+main h1 {
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Agenda Section */
+#agenda-section {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#agenda-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+#agenda-section h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #444;
+    letter-spacing: 0.5px;
+}
+
+#agenda-section p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#agenda-section ul {
+    padding-left: 20px;
+    list-style: disc;
+    color: #555;
+    line-height: 1.6;
+}
+
+#agenda-section ul li {
+    margin-bottom: 10px;
+}
+
+/* Form Section */
+form {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+form input,
+form textarea,
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+form input::placeholder,
+form textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+form button {
+    background: linear-gradient(90deg, #8e4dff, #431da3);
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background: linear-gradient(90deg, #431da3, #8e4dff);
+    transform: translateY(-2px);
+}
+
+/* Analytics Chart Styling */
+canvas {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    main {
+        width: 100%;
+        padding: 20px;
+    }
+
+    #agenda-section,
+    form {
+        padding: 15px;
+    }
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
