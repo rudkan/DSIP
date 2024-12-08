@@ -58,9 +58,9 @@ def get_total_entries():
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
-            cursor.execute("SELECT COUNT(*) as total FROM CommunicationDetails")
+            cursor.execute("SELECT COUNT(*) FROM CommunicationDetails")
             result = cursor.fetchone()
-        return jsonify({"total": result['total'] if result and 'total' in result else 0}), 200
+        return jsonify({"total": result[0] if result and result[0] else 0}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
