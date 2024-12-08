@@ -81,6 +81,23 @@ def get_medium_analysis():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# API Endpoint: Get Next MessageID
+@app.route('/get_next_message_id', methods=['GET'])
+def get_next_message_id():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT MessageID FROM CommunicationDetails ORDER BY MessageID DESC LIMIT 1")
+            result = cursor.fetchone()
+            # If no entries in the database, start with 1
+            if result:
+                last_id = int(result['MessageID'])  # Assuming MessageID is numeric
+                next_id = last_id + 1
+            else:
+                next_id = 1
+        return jsonify({"next_message_id": str(next_id)}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # Start the Flask App
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
